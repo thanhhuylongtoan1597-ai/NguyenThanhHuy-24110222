@@ -1,7 +1,7 @@
 import time
 from .utils import is_vacuum_goal, apply_vacuum_action_advanced
 
-def run_multi_dfs(start_matrix, sx, sy, goal_matrix):
+def run_partial_observation_search(start_matrix, sx, sy, goal_matrix):
     start_time = time.time()
     r2, c2 = (2, 2) if (sx, sy) != (2, 2) else (0, 0)
     start_grid = tuple(tuple(row) for row in start_matrix)
@@ -42,3 +42,47 @@ def run_multi_dfs(start_matrix, sx, sy, goal_matrix):
                 frontier.append((child_state, path + [action]))
                 
     return None, node_count, (time.time() - start_time) * 1000
+
+def run_partial_observation_search_dual(matrix1, matrix2, sx, sy, goal_matrix):
+    start_time = time.time()
+    grid1 = tuple(tuple(row) for row in matrix1)
+    grid2 = tuple(tuple(row) for row in matrix2)
+    
+    start_belief = frozenset([
+        (sx, sy, grid1),
+        (sx, sy, grid2)
+    ])
+    
+    frontier = [(start_belief, [])]
+    reached = set([start_belief])
+    node_count = 0
+    actions = ["SUCK", "UP", "DOWN", "LEFT", "RIGHT"]
+    
+    while frontier:
+        current_belief, path = frontier.pop()
+        node_count += 1
+        
+        if all(is_vacuum_goal([list(row) for row in s[2]]) for s in current_belief):
+            return path, node_count, (time.time() - start_time) * 1000
+            
+        for action in actions:
+            next_belief_list = []
+            has_changed = False 
+            
+            for (r, c, grid) in current_belief:
+                matrix_state = [list(row) for row in grid]
+                res_m, nr, nc = apply_vacuum_action_advanced(matrix_state, action, r, c)
+                if res_m is not None:
+                    has_changed = True
+                    next_belief_list.append((nr, nc, tuple(tuple(row) for row in res_m)))
+                else:
+                    next_belief_list.append((r, c, grid))
+                    
+            if not has_changed: continue 
+            next_belief = frozenset(next_belief_list)
+            if next_belief not in reached:
+                reached.add(next_belief)
+                frontier.append((next_belief, path + [action]))
+                
+    return None, node_count, (time.time() - start_time) * 1000
+

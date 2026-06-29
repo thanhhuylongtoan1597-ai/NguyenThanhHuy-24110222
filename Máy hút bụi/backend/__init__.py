@@ -13,8 +13,8 @@ from .hill_climbing import (
 )
 from .beam_search import run_local_beam_search
 from .simulated_annealing import run_simulated_annealing
-from .multi_dfs import run_multi_dfs
-from .belief_dfs import run_belief_dfs
+from .partial_observation_search import run_partial_observation_search, run_partial_observation_search_dual
+from .sensorless_search import run_sensorless_search, run_sensorless_search_dual
 from .and_or_search import run_and_or_search
 
 __all__ = [
@@ -28,7 +28,8 @@ __all__ = [
     'run_simple_hill_climbing', 'run_steepest_hill_climbing', 'run_stochastic_hill_climbing', 'run_random_restart_hc',
     'run_local_beam_search',
     'run_simulated_annealing',
-    'run_multi_dfs',
-    'run_belief_dfs',
+    'run_partial_observation_search', 'run_partial_observation_search_dual',
+    'run_sensorless_search', 'run_sensorless_search_dual',
     'run_and_or_search'
 ]
+

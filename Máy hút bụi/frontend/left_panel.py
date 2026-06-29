@@ -42,7 +42,7 @@ class LeftPanel:
             ("Simple Hill Climbing", "Simple HC"), ("Steepest Hill Climbing", "Steepest HC"),
             ("Stochastic Hill Climbing", "Stochastic HC"), ("Random Restart HC", "Random Restart HC"),
             ("Local Beam Search", "Local Beam Search"), ("Simulated Annealing", "Simulated Annealing"),
-            ("Multi-State DFS", "Multi DFS"), ("Belief State DFS", "Belief DFS"),
+            ("Partial Observation Search", "Partial Observation Search"), ("Sensorless Search", "Sensorless Search"),
             ("AND-OR Graph Search", "AND-OR")
         ]
 
@@ -71,9 +71,14 @@ class LeftPanel:
         btn_update.grid(row=2, column=0, columnspan=2, sticky="ew", pady=5)
         
         self.btn_reset = tk.Button(self.frame, text="Reset Bàn Cờ\n(Random)", font=("Helvetica", 10, "bold"), bg="#f2dede", fg="#a94442", relief="groove", bd=1, height=2, command=self.app.reset_random)
-        self.btn_reset.pack(fill="x", pady=10)
+        self.btn_reset.pack(fill="x", pady=5)
+
+        self.btn_dual = tk.Button(self.frame, text="🤖 Mô Phỏng 2 Bàn Cờ\n(Dual Board Mode)", font=("Helvetica", 10, "bold"), bg="#d9edf7", fg="#31708f", relief="groove", bd=1, height=2, command=self.app.open_dual_board_window)
+        self.btn_dual.pack(fill="x", pady=5)
 
     def set_controls_state(self, state):
         for btn in self.buttons.values():
             btn.config(state=state)
         self.btn_reset.config(state=state)
+        self.btn_dual.config(state=state)
+

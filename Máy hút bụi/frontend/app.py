@@ -5,8 +5,10 @@ import backend
 from .left_panel import LeftPanel
 from .middle_panel import MiddlePanel
 from .right_panel import RightPanel
+from .dual_board_window import DualBoardWindow
 
 class VacuumSimulationApp:
+
     def __init__(self, root):
         self.root = root
         self.root.title("Chương Trình Mô Phỏng Robot Hút Bụi AI")
@@ -76,7 +78,12 @@ class VacuumSimulationApp:
         self.right_panel.log("Đã khởi tạo ngẫu nhiên bản đồ mới.\n")
         self.draw_all() 
 
+    def open_dual_board_window(self):
+        if self.is_running: return
+        DualBoardWindow(self.root, self.robot_row, self.robot_col)
+
     def set_controls_state(self, state):
+
         self.left_panel.set_controls_state(state)
 
     def start_search(self, algo_name):
@@ -107,8 +114,8 @@ class VacuumSimulationApp:
         elif algo_name == "Local Beam Search": path, nodes, t_ms = backend.run_local_beam_search(self.matrix, self.robot_row, self.robot_col, goal_matrix)
         elif algo_name == "Simulated Annealing": path, nodes, t_ms = backend.run_simulated_annealing(self.matrix, self.robot_row, self.robot_col, goal_matrix)
         
-        elif algo_name == "Multi DFS": path, nodes, t_ms = backend.run_multi_dfs(self.matrix, self.robot_row, self.robot_col, goal_matrix)
-        elif algo_name == "Belief DFS": path, nodes, t_ms = backend.run_belief_dfs(self.matrix, goal_matrix)
+        elif algo_name == "Partial Observation Search": path, nodes, t_ms = backend.run_partial_observation_search(self.matrix, self.robot_row, self.robot_col, goal_matrix)
+        elif algo_name == "Sensorless Search": path, nodes, t_ms = backend.run_sensorless_search(self.matrix, goal_matrix)
         
         elif algo_name == "AND-OR":
             path, all_paths, raw_plan, nodes, t_ms = backend.run_and_or_search(start_matrix, self.robot_row, self.robot_col, goal_matrix)

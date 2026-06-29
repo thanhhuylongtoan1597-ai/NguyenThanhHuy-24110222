@@ -1,5 +1,3 @@
-<img width="1090" height="888" alt="Đang ghi 2026-06-29 230212" src="https://github.com/user-attachments/assets/deda6944-1db2-4f7e-a296-26a26d3c6797" />---
-
 - **Họ và tên:** Nguyễn Thành Huy
 - **Mã số sinh viên (MSSV):** 24110222
 - **Môn học:** Introduction to AI (Nhập môn Trí tuệ Nhân tạo)
